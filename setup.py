@@ -61,8 +61,6 @@ setup(
     # requirements files see:
     # https://packaging.python.org/en/latest/technical.html#install-requires-vs-requirements-files
     install_requires=[
-	'numpy',
-	'pandas',
 	'pdfminer==20131113',
 	'xlrd',
     ],

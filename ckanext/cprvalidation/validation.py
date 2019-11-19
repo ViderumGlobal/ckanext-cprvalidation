@@ -2,7 +2,7 @@
 import sys
 import re
 import os
-import pandas
+import xlrd
 import logging
 import psycopg2
 import urllib2
@@ -325,13 +325,18 @@ def processXLSX(file_url):
     #Uses Pandas to convert contents to string
     #Simple but it works
     #Parses all sheets by default
+    data = []
     try:
-        df = pandas.read_excel(file_url)
-        file_string = df.to_string()
+        socket = urllib2.urlopen(file_url)
+        #this line gets me the excel workbook
+        xlfile = xlrd.open_workbook(file_contents = socket.read())
+        sh1 = xlfile.sheet_by_index(0)
+        for rownum in range(sh1.nrows): # sh1.nrows -> number of rows (ncols -> num columns)
+            data.append(' '.join(sh1.row_values(rownum)))
     except Exception as e:
         error = e.message
 
-    return [error,file_string]
+    return [error, '\n'.join(data)]
 
 def processPDF(file_path):
     #TODO: This method is generally too slow to be useful. Needs a rewrite (Add PDF as an allowed format in the SQL
