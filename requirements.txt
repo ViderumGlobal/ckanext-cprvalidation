@@ -1,5 +1,4 @@
 xlrd
-numpy==1.10.4
 pandas==0.20.3
 python-docx
 pdfminer==20131113
